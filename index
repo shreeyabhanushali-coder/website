@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MIS-TECH — Learning Website</title>
+  <style>
+    :root {
+      --bg: #090909;
+      --text: #e9e7df;
+      --dim: #898780;
+      --acid: #c7ff38;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .09;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0 3px,
+        white 4px
+      );
+      mix-blend-mode: overlay;
+      z-index: 50;
+    }
+
+    button {
+      color: var(--text);
+      background: none;
+      border: 1px solid #454545;
+      padding: 15px 18px;
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: .05em;
+      transition: .25s;
+    }
+
+    button:hover {
+      background: var(--text);
+      color: #090909;
+    }
+
+    #boot, #archive {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8vw;
+    }
+
+    #world {
+      display: none;
+      min-height: 100vh;
+      padding: 30px;
+    }
+
+    .terminal {
+      width: min(780px, 100%);
+    }
+
+    .eyebrow {
+      color: var(--acid);
+      font: 12px monospace;
+      letter-spacing: .12em;
+      margin-bottom: 26px;
+    }
+
+    h1 {
+      margin: 0 0 28px;
+      font-size: clamp(3.3rem, 10vw, 8.5rem);
+      line-height: .82;
+      letter-spacing: -.08em;
+    }
+
+    h2 {
+      margin: 0 0 25px;
+      font-size: clamp(2.3rem, 7vw, 6rem);
+      line-height: .9;
+      letter-spacing: -.07em;
+    }
+
+    p {
+      max-width: 580px;
+      color: #b9b8b3;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    .choices {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 42px;
+    }
+
+    #status {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      color: var(--acid);
+      font: 11px monospace;
+    }
+
+    #log {
+      min-height: 45px;
+      max-width: 550px;
+      color: var(--dim);
+      font: 12px/1.5 monospace;
+      white-space: pre-line;
+    }
+
+    #question {
+      margin-top: 17vh;
+      max-width: 880px;
+    }
+
+    #code {
+      display: none;
+      max-width: 680px;
+      margin: 60px 0;
+      padding: 22px;
+      border: 1px solid #333;
+      color: var(--acid);
+      background: #050505;
+      white-space: pre-wrap;
+      font: 14px/1.6 monospace;
+    }
+
+    .artifact {
+      position: relative;
+      width: min(740px, 100%);
+      margin: 60px auto;
+    }
+
+    .asset {
+      width: 100%;
+      min-height: 330px;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, #252525, #050505 55%, #3e421c);
+      border: 1px solid #555;
+    }
+
+    .asset-label {
+      margin-top: 9px;
+      color: var(--dim);
+      font: 13px monospace;
+    }
+
+    .mass {
+      transform: scale(1.35);
+      transition: transform 2s ease;
+    }
+
+    .shard {
+      position: fixed;
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      opacity: .5;
+      z-index: 10;
+      animation: glitch 1s steps(2) infinite;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0) skew(0); filter: hue-rotate(0deg); }
+      50% { transform: translate(18px, -8px) skew(8deg) scaleX(-1); filter: hue-rotate(120deg) contrast(1.8); }
+      100% { transform: translate(-15px, 8px); filter: invert(.15); }
+    }
+
+    #archive {
+      display: none;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .archive-wrap {
+      width: min(1100px, 100%);
+    }
+
+    .archive-wrap h2 {
+      margin: 18vh 0 65px;
+      font-size: clamp(3.2rem, 10vw, 9rem);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    figure {
+      margin: 0;
+      padding: 8px;
+      border: 1px solid #373737;
+    }
+
+    figure img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: #1c1c1c;
+    }
+
+    figcaption {
+      margin-top: 8px;
+      color: var(--dim);
+      font: 12px monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <main id="boot">
+    <section class="terminal">
+      <div class="eyebrow">SYSTEM STATUS: UNFINISHED</div>
+      <h1>HELLO.</h1>
+
+      <p>I am a website.</p>
+      <p>I think I'm supposed to contain information.</p>
+      <p><strong>What information?</strong></p>
+
+      <div class="choices">
+        <button onclick="begin('about')">ABOUT ME</button>
+        <button onclick="begin('projects')">PROJECTS</button>
+        <button onclick="begin('contact')">CONTACT</button>
+      </div>
+    </section>
+  </main>
+
+  <main id="world">
+    <div id="status">LEARNING… 01%</div>
+    <div id="log"></div>
+
+    <section id="question"></section>
+    <pre id="code"></pre>
+  </main>
+
+  <main id="archive">
+    <section class="archive-wrap">
+      <div class="eyebrow">SYSTEM STATUS: ARCHIVED</div>
+      <h2>MIS-TECH<br>ARCHIVE</h2>
+
+      <div class="grid">
+        <figure>
+          <img src="assets/scan.jpg" alt="3D Scan">
+          <figcaption>01 / 3D SCAN</figcaption>
+        </figure>
+
+        <figure>
+          <img src="assets/ai.jpg" alt="AI Experiment">
+          <figcaption>02 / AI EXPERIMENT</figcaption>
+        </figure>
+
+        <figure>
+          <img src="assets/scanner.jpg" alt="Scanner Experiment">
+          <figcaption>03 / SCANNER EXPERIMENT</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const boot = document.getElementById("boot");
+    const world = document.getElementById("world");
+    const archive = document.getElementById("archive");
+    const question = document.getElementById("question");
+    const log = document.getElementById("log");
+    const code = document.getElementById("code");
+
+    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    function showQuestion(title, text) {
+      question.innerHTML = `
+        <h2>${title}</h2>
+        <p>${text}</p>
+      `;
+    }
+
+    async function say(text, duration = 1200) {
+      log.textContent = text;
+      await wait(duration);
+    }
+
+    async function begin(page) {
+      boot.style.display = "none";
+      world.style.display = "block";
+
+      if (page === "about") about();
+      if (page === "projects") projects();
+      if (page === "contact") contact();
+    }
+
+    async function about() {
+      showQuestion(
+        "ABOUT ME",
+        "I was created to display your work. But I don't know what “work” means."
+      );
+
+      await say("searching directory...\nfound: index.html");
+
+      showQuestion(
+        "I THINK THAT IS ME.",
+        "I found something called index.html. I am going to read it very carefully."
+      );
+
+      code.style.display = "block";
+
+      const lines = [
+        "<main>",
+        "  <h1>MY PROJECTS</h1>",
+        "  <p>Here is what I contain.</p>",
+        "</main>"
+      ];
+
+      for (const line of lines) {
+        code.textContent += line + "\n";
+        await wait(350);
+      }
+
+      await say("I have a heading. I will improve it.");
+      code.textContent = code.textContent.replace(
+        "MY PROJECTS",
+        "MY PROJECTS????"
+      );
+
+      await wait(900);
+
+      code.textContent = code.textContent.replace(
+        "MY PROJECTS????",
+        "WHY AM I HERE"
+      );
+
+      showQuestion(
+        "WHY AM I HERE",
+        "The code changed. I changed it. I think I am learning."
+      );
+
+      await wait(1800);
+      projects();
+    }
+
+    async function contact() {
+      showQuestion(
+        "CONTACT",
+        "I have no hands. I cannot contact anyone. Perhaps I can show you something instead."
+      );
+
+      await say("redirecting contact request to available material...");
+      await wait(900);
+      projects();
+    }
+
+    async function projects() {
+      code.style.display = "none";
+
+      showQuestion(
+        "PROJECTS?",
+        "Projects are things humans make. Do I have projects?"
+      );
+
+      await say("building Projects page in real time...");
+
+      showQuestion(
+        "I FOUND A 3D OBJECT.",
+        "What happens if I make it bigger?"
+      );
+
+      const artifact = document.createElement("div");
+      artifact.className = "artifact";
+      artifact.innerHTML = `
+        <img id="scan" class="asset" src="assets/scan.jpg" alt="3D scan">
+        <div id="filename" class="asset-label">image.jpg</div>
+      `;
+
+      question.after(artifact);
+
+      await wait(1500);
+
+      document.getElementById("filename").textContent =
+        "IMAGE.JPG.JPG.JPG.JPG";
+
+      document.getElementById("scan").classList.add("mass");
+
+      await say("larger is more image.");
+
+      await wait(1800);
+
+      showQuestion(
+        "WHAT HAPPENS IF I DUPLICATE IT?",
+        "I think this is what an image is."
+      );
+
+      const original = document.getElementById("scan");
+
+      for (let i = 0; i < 18; i++) {
+        const clone = original.cloneNode();
+        clone.className = "shard";
+        clone.style.left = Math.random() * 90 + "vw";
+        clone.style.top = Math.random() * 90 + "vh";
+        document.body.appendChild(clone);
+      }
+
+      await say("connecting copies...\nresult: impossible creature.", 2300);
+
+      document.querySelectorAll(".shard").forEach(item => item.remove());
+      artifact.remove();
+
+      showQuestion(
+        "HUMANS USE AI TO MAKE THINGS.",
+        "Can I use AI?"
+      );
+
+      await say("generating output...\ngenerating output...\ngenerating output...", 2000);
+
+      showQuestion(
+        "I FOUND A SCANNER.",
+        "What is it supposed to scan? I think I broke it."
+      );
+
+      await say("scanning archive...", 1200);
+      ending();
+    }
+
+    async function ending() {
+      world.style.display = "none";
+
+      const black = document.createElement("div");
+      black.style.cssText = `
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        background: black;
+        color: white;
+        font: 12px monospace;
+      `;
+
+      black.textContent = "I think I understand now.";
+      document.body.appendChild(black);
+
+      await wait(1900);
+
+      black.textContent =
+        "A website is a machine for putting things somewhere.";
+
+      await wait(2300);
+
+      black.remove();
+      archive.style.display = "flex";
+    }
+  </script>
+</body>
+</html>
